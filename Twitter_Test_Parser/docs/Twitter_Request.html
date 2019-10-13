@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Twitter_Request</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Twitter_Request</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/shehtab/Documents/Social_Media_Credibility/Twitter_Test_Parser/Twitter_Request.py">/home/shehtab/Documents/Social_Media_Credibility/Twitter_Test_Parser/Twitter_Request.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="base64.html">base64</a><br>
+<a href="hashlib.html">hashlib</a><br>
+</td><td width="25%" valign=top><a href="hmac.html">hmac</a><br>
+<a href="requests.html">requests</a><br>
+</td><td width="25%" valign=top><a href="secrets.html">secrets</a><br>
+<a href="time.html">time</a><br>
+</td><td width="25%" valign=top><a href="urllib.parse.html">urllib.parse</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Twitter_Request.html#Request">Request</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Request">class <strong>Request</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Request">Request</a>(params)<br>
+&nbsp;<br>
+docstring&nbsp;for&nbsp;Twitter-<a href="#Request">Request</a><br>
+&nbsp;<br>
+...<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+oauth_consumer_key:&nbsp;str<br>
+oauth_consumer_secret:&nbsp;str<br>
+oauth_access_key:&nbsp;str<br>
+oauth_access_key_secret:&nbsp;str<br>
+oauth_url:&nbsp;str<br>
+oauth_type:&nbsp;str<br>
+&nbsp;<br>
+Methods<br>
+--------------<br>
+&nbsp;<br>
+gen_request()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;a&nbsp;<a href="#Request">Request</a>&nbsp;<a href="builtins.html#object">object</a>&nbsp;with&nbsp;generated&nbsp;OAuth1.0&nbsp;headers<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Request-__init__"><strong>__init__</strong></a>(self, params)</dt><dd><tt>Parameters<br>
+----------<br>
+params&nbsp;:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;of&nbsp;SIX&nbsp;key:value&nbsp;pairs.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_consumer_key:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_consumer_secret:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_access_key:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_access_key_secret:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_url:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oauth_type:&nbsp;str</tt></dd></dl>
+
+<dl><dt><a name="Request-create_signature"><strong>create_signature</strong></a>(self, params, signing_key)</dt></dl>
+
+<dl><dt><a name="Request-encode"><strong>encode</strong></a>(self, byte_str)</dt></dl>
+
+<dl><dt><a name="Request-get_nonce"><strong>get_nonce</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Request-get_request"><strong>get_request</strong></a>(self, stream=True)</dt></dl>
+
+<dl><dt><a name="Request-get_time_stamp"><strong>get_time_stamp</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-getrandbits"><strong>getrandbits</strong></a>(...)<font color="#909090"><font face="helvetica, arial"> method of <a href="random.html#Random">random.Random</a> instance</font></font></dt><dd><tt><a href="#-getrandbits">getrandbits</a>(k)&nbsp;-&gt;&nbsp;x.&nbsp;&nbsp;Generates&nbsp;an&nbsp;int&nbsp;with&nbsp;k&nbsp;random&nbsp;bits.</tt></dd></dl>
+</td></tr></table>
+</body></html>
