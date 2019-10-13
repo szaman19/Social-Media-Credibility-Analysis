@@ -1,6 +1,15 @@
 import requests as r
 import base64
 import json
+from random import getrandbits
+import hmac 
+import hashlib
+import urllib.parse
+import time
+import secrets
+from requests_oauthlib import OAuth1Session
+import json
+import Twitter_Request
 
 def get_tokens(file_name=".cert"):
 	certification_file = open(file_name, "r")
@@ -10,7 +19,7 @@ def get_tokens(file_name=".cert"):
 	keys = ["API","API_SECRET","ACCESS","ACCESS_SECRET"]
 
 	for lines in certification_file:
-		line = lines.strip().split()
+		line = lines.strip().rstrip('\n').split()
 		if(len(line) > 1):
 			print("Failed reading certification file")
 		else:
@@ -20,31 +29,31 @@ def get_tokens(file_name=".cert"):
 
 	return tokens
 
-def get_bearer_token(tokens):
-	token_credentials = tokens["API"] +":"+tokens["API_SECRET"]
-	token_credentials = "Basic " + str(base64.urlsafe_b64encode(token_credentials.encode()), "utf-8")
+def main():
+	tokens = get_tokens()
+	# try_outh(tokens)
+	params = {}
+	params["oauth_consumer_key"] = tokens['API']
+	params["oauth_access_key"] = tokens ['ACCESS']
+	params["oauth_consumer_key_secret"] = tokens["API_SECRET"]
+	params["oauth_access_key_secret"] = tokens ["ACCESS_SECRET"]
 
-	print(token_credentials)
+	params['url'] = "https://stream.twitter.com/1.1/statuses/sample.json"
+	params['request_type'] = "GET"
 
-	headers = {"Authorization":token_credentials, 
-	"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8",
-	"Host":"api.twitter.com",
-	"Accept-Encoding": "gzip"}
-	request_params = {"grant_type":"client_credentials"}
-	response = r.post("https://api.twitter.com/oauth2/token", headers=headers, data=request_params)
-	print(response.text)
-	json_data = json.loads(response.text)[0]
-	tokens ['bearer_token'] = json_data["access_token"]
-	return tokens
+	TR = Twitter_Request.Request(params).get_request()
 
-def get_request(b_tokens):
-
-	print(b_tokens)
+	TR = TR.prepare()
 
 	session = r.Session()
 
-def main():
-	tokens = get_tokens()
-	tokens = get_bearer_token(tokens)
-	get_stream(tokens)
+	resp = session.send(TR,  stream=True)
+	print(resp.status_code)
+
+	for line in resp.iter_lines():
+		if(line):
+			line = line.decode('utf-8')
+			d = json.loads(line)
+			print(d)
+
 main()
