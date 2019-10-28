@@ -36,12 +36,14 @@ def main():
 			d = json.loads(line)
 			# print(d)
 			if('delete' not in d):
-				print("detected not deleted tweet, adding", counter)
+				#print("detected not deleted tweet, adding", counter)
 				collection.insert_one(d)
 				counter +=1
-			else:
-				print("detected deleted tweet")
-		if (counter == 50000):
+				if (counter % 100 == 0):
+					print("Number of tweets collected: ", counter)
+			#else:
+				#print("detected deleted tweet")
+		if (counter == 3000000):
 			break
 
 	session.close()
