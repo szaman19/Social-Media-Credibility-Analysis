@@ -74,7 +74,7 @@ def main():
 			search_terms = update_search_terms(search_terms)
 		for each in search_terms:
 			search_terms[each] = get_tweets(params, each, search_terms[each],collection)
-		time.sleep()
+		time.sleep(250)
 
 main()
 
