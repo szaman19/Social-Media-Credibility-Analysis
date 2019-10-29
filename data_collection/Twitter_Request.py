@@ -29,7 +29,7 @@ class Request(object):
 		Returns a Request object with generated OAuth1.0 headers
 
 	"""
-	def __init__(self, params):
+	def __init__(self, params, search = False):
 		"""
 		Parameters
 		----------
@@ -50,6 +50,12 @@ class Request(object):
 
 		self.url = params['url']
 		self.type = params['request_type']
+		self.search_params = {}
+
+		if(search):
+			self.search_params['q'] = params['q']
+			# self.search_params['count'] = params['count']
+
 
 	def get_time_stamp(self):
 		return int(time.time())
@@ -67,8 +73,13 @@ class Request(object):
 		signature_base += self.encode(self.url)
 		signature_base += "&"
 
+		if(self.search_params):
+			for key in self.search_params.keys():
+				params[key] = self.search_params[key]
+
 		param_string = '&'.join([('%s=%s' % (self.encode(str(k)), self.encode(str(params[k])))) for k in sorted(params)])
 
+		print(param_string)
 		message = signature_base + self.encode(param_string)
 
 		message = bytes(message,'UTF-8')
@@ -82,7 +93,7 @@ class Request(object):
 
 		return sig_base_64.decode("utf-8")	
 
-	def get_request(self, stream = True):
+	def get_request(self, stream = True, custom_query = False):
 		params = {}
 		params["oauth_consumer_key"] = self.oauth_consumer_key
 		params["oauth_token"] = self.oauth_access_key
@@ -99,8 +110,14 @@ class Request(object):
 		auth_param_str = ", ".join(['%s="%s"' % (self.encode(i) , self.encode(params[i])) for i in sorted(params)])
 		
 		DST += auth_param_str
-		print(DST)
+
+		# print(DST)
+
 		headers = {}
 		headers['authorization'] = DST.rstrip('\n')
 		req = r.Request(self.type, self.url, headers=headers)
+		
+		if(custom_query):
+			req = r.Request(self.type, self.url, headers=headers, params=self.search_params)
+			return req
 		return req

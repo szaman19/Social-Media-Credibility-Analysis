@@ -48,11 +48,6 @@ def main():
 
 	session.close()
 
-	# x = collection.find().limit(10)
-
-	# for i in x:
-	# 	print(i)
-
 
 if __name__ == '__main__':
 	main()
