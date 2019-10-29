@@ -52,7 +52,7 @@ def main():
 	params["oauth_access_key_secret"] = tokens ["ACCESS_SECRET"]
 	params['url'] = "https://api.twitter.com/1.1/search/tweets.json"
 	params['request_type'] = "GET"
-	params['count'] = "100"
+	params['count'] = 100
 	params['result_type'] = "recent"
 
 
@@ -67,6 +67,8 @@ def main():
 	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 	twitter_db = myclient["twitter_data"]
 	collection = twitter_db["searched_tweets"]
+
+	# get_tweets(params, "Donald Trump",search_terms['Donald Trump'], collection)
 
 
 	while(True):

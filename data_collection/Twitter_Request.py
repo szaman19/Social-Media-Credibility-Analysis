@@ -54,7 +54,7 @@ class Request(object):
 
 		if(search):
 			self.search_params['q'] = params['q']
-			# self.search_params['count'] = params['count']
+			self.search_params['count'] = params['count']
 
 
 	def get_time_stamp(self):
