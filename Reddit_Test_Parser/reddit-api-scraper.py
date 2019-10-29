@@ -33,7 +33,7 @@ def get_token():
 
 # uses retrieved token so we can begin crawling
 def use_token(response_json):
-    headers = { 'Authorization': f"{response.json['token_type']} {response_json['access_token']}",
+    headers = { 'Authorization': f"{response.json['token_type']} {response_json['access_token']}",\
                 "User-Agent": "cs480n-crawler by cs480n"}
     response = r.get("http://oauth.reddit.com/api/v1/me", headers=headers)
     return response.json()
