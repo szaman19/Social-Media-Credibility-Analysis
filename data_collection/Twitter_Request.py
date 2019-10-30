@@ -29,7 +29,7 @@ class Request(object):
 		Returns a Request object with generated OAuth1.0 headers
 
 	"""
-	def __init__(self, params, search = False):
+	def __init__(self, params, search = False, user=False):
 		"""
 		Parameters
 		----------
@@ -55,6 +55,14 @@ class Request(object):
 		if(search):
 			self.search_params['q'] = params['q']
 			self.search_params['count'] = params['count']
+			self.search_params['since_id'] = params['since_id']
+			self.search_params['request_type'] = params['request_type']
+		elif(user):
+			self.search_params['user_id'] = params['user_id']
+			self.search_params['count'] = params['count']
+			self.search_params['since_id'] = params['since_id']
+			
+
 
 
 	def get_time_stamp(self):
