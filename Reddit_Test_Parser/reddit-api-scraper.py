@@ -33,7 +33,7 @@ def get_token():
 
 # uses retrieved token so we can begin crawling
 def use_token(response_json):
-    headers = { 'Authorization': f"{response.json['token_type']} {response_json['access_token']}",\
+    headers = { 'Authorization': f"{response_json['token_type']} {response_json['access_token']}",\
                 "User-Agent": "cs480n-crawler by cs480n"}
     response = r.get("http://oauth.reddit.com/api/v1/me", headers=headers)
     return response.json()
@@ -49,18 +49,15 @@ def check_update(file_hash):
 # returns list of subreddits queued to crawl
 def update_subs_list(subs):
     f = open("subs_to_search.txt", "r")
-
-    for subreddit in f:
-        if(not (subreddit in subs.keys())):
-            subs[subreddit.rstrip()] = 0
-
+    subs = json.loads(f.read())
     f.close()
     return subs
 
 
 # returns dictionary of a post's JSON return dictionary
 def get_post(subreddit, post_id):
-    post = r.get(f'http://www.reddit.com/r/{subreddit}/{post_id}/.json')
+    post = r.get(f'http://www.reddit.com/r/{subreddit}/{post_id}/.json', \
+                   headers = {'User-Agent': 'cs480n-crawler'})
     post_json = post.json()
 
     ret_dict = {}
@@ -69,20 +66,19 @@ def get_post(subreddit, post_id):
     return ret_dict
 
 # crawls newest posts on given subreddit until most recent post of last search (or limit reached)
-def crawl_sub(subreddit, most_recent_id):
-    subreddit_new = r.get(f'http://www.reddit.com/r/{subreddit}/new/.json?limit=1000')
+def crawl_sub(subreddit, most_recent_id, collection):
+    subreddit_new = r.get(f'http://www.reddit.com/r/{subreddit}/new/.json?limit=1000', \
+                            headers = {'User-Agent': 'cs480n-crawler'})
     sub_new_json = subreddit_new.json()
 
     posts = sub_new_json['data']['children']
-    post_num = 0    
-    while post_num in posts:
-        curr_post = posts[post_num]['data']
+
+    for post_num in posts:
+        curr_post = post_num['data']
         if (curr_post['id'] == most_recent_id):
             break
         curr_post_data = get_post(subreddit, curr_post['id'])
         collection.insert_one(curr_post_data)
-    
-        post_num += 1
 
     new_most_recent_id = posts[0]['data']['id']
 
@@ -92,23 +88,23 @@ def crawl_sub(subreddit, most_recent_id):
 def main():
 
     # authorize application and recieve token from oauth2
-    get_token_response = get_token()
-    use_token_response = use_token(get_token_response)  
+  #  get_token_response = get_token()
+  #  print(get_token_response)
+  #  use_token_response = use_token(get_token_response)  
 
     # instantiate MD5 checksum for list of subreddits
-    f.open("subs_to_search.txt", "rb")
+    f = open("subs_to_search.txt", "rb")
     file_hash = hashlib.md5(f.read()).hexdigest()
     f.close()
 
     # instantiate list of subreddits to search
     subs = {}
-    subs = update_subs_list(subs)
     print(subs)
+    subs = update_subs_list(subs)
 
     # connect to Mongo DB
     myclient = pymongo.MongoClient('mongodb://localhost:27017/')
     reddit_db = myclient["reddit_data"]
-    collection = reddit_db["searched_posts"]
 
     # collection loop
     while(True):
@@ -119,10 +115,16 @@ def main():
 
         # crawls each subreddit on list
         for subreddit in subs:
-            subs[subreddit] = crawl_sub(subreddit, subs[subreddit])
+            print("crawling ", subreddit)
+            curr_collection = reddit_db[subreddit]
+            subs[subreddit] = crawl_sub(subreddit, subs[subreddit], curr_collection)
+
+            with open('subs_to_search.txt', 'w') as f:
+                f.write(json.dumps(subs))
+                f.close()
 
         # waits to put some throttling on mongo storage rate
-        time.sleep(SLEEP_TIME)
+        time.sleep(250)
 
 
 if __name__ == '__main__':

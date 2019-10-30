@@ -1,6 +1,1 @@
-politics
-worldpolitics
-The_Donald
-news
-worldnews
-Worldevents
+{"politics": "dozdis", "worldpolitics": "starter", "news": "starter", "worldnews": "starter", "Worldevents": "starter"}
