@@ -24,12 +24,27 @@ def main():
 					dates[str(datetime.fromtimestamp(ts).date())] =1
 
 	# print(dates)
+	
+
+	log = open('output.txt', 'w')
+
+	log.write("date,number of tweets\n")
+	for each in dates.keys():
+		string = each+","+str(dates[each])+"\n"
+		log.write(string)
+	log.close()
+
+
 	y_pos = np.arange(len(dates.keys()))
+
+
 	plt.bar(y_pos, dates.values(), align='center')
-	plt.xticks(y_pos, dates.keys())
-	# plt.show()
+	plt.xticks(y_pos, dates.keys(), rotation='vertical')
 	plt.ylabel("Number of tweets")
 	plt.title("Daily Collection Graph")
+	plt.margins(0.2)
+	plt.subplots_adjust(bottom=0.25)
+	# plt.show()
 	plt.savefig("test.png", format="png")
 
 
