@@ -7,7 +7,7 @@ def main():
 	collection = twitter_db['url_tweets_search']
 	# print(collection.count())
 	f = open("domains_search.csv", 'w')
-	f.write("domains \n")
+	f.write("domains,suffix,subdomain \n")
 	counter = 0
 	tweets = collection.find()
 	total  = tweets.count()
@@ -23,6 +23,8 @@ def main():
 					if(len(urls) > 0):
 						ext = tldextract.extract(urls[0]['expanded_url'])
 						f.write(ext.domain)
+						f.write(ext.suffix)
+						f.write(ext.subdomain)
 						f.write('\n')
 	f.close()
 			 
