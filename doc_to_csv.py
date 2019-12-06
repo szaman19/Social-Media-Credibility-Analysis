@@ -4,10 +4,10 @@ import tldextract
 def main():
 	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 	twitter_db = myclient["twitter_data"]
-	collection = twitter_db['url_tweets_test']
+	collection = twitter_db['url_tweets_search']
 	# print(collection.count())
 	f = open("domains_search.csv", 'w')
-	f.write("domains,suffix,subdomain,reg_domain\n")
+	f.write("domains,suffix,subdomain,reg_domain,time\n")
 	counter = 0
 	tweets = collection.find()
 	total  = tweets.count()
@@ -29,6 +29,8 @@ def main():
 						f.write(ext.subdomain)
 						f.write(",")
 						f.write(ext.registered_domain)
+						f.write(",")
+						f.write(doc['timestamp_ms'])
 						f.write('\n')
 	f.close()
 			 
