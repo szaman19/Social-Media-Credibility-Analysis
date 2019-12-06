@@ -4,9 +4,9 @@ import tldextract
 def main():
 	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 	twitter_db = myclient["twitter_data"]
-	collection = twitter_db['url_tweets_test']
+	collection = twitter_db['url_tweets_search']
 	# print(collection.count())
-	f = open("domains.csv", 'w')
+	f = open("domains_search.csv", 'w')
 	f.write("domains \n")
 	counter = 0
 	tweets = collection.find()

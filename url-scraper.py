@@ -3,8 +3,8 @@ import time
 
 client = MongoClient()
 db = client['twitter_data']
-tweets = db['streamed_tweets']
-newCol = db['url_tweets_test']
+tweets = db['searched_tweets']
+newCol = db['url_tweets_search']
 
 start = time.time()
 
