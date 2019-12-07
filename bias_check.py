@@ -7,7 +7,7 @@ from scipy import stats
 from sklearn.neighbors import KernelDensity
 
 def bias_check(sources):
-	fd = pd.read_csv("domains_search.csv")
+	fd = pd.read_csv("domains.csv")
 	topn = fd['domains']
 
 	rval = {}
@@ -41,8 +41,8 @@ def bias_check(sources):
 	kernel = 'exponential'
 	data_points = np.array(data_points)[:, np.newaxis]
 
-	kde = KernelDensity(kernel=kernel, bandwidth=.2).fit(data_points)
-	X_plot = np.linspace(0, 7, 10000)[:, np.newaxis]
+	kde = KernelDensity(kernel=kernel, bandwidth=.5).fit(data_points)
+	X_plot = np.linspace(0, 7, 1000)[:, np.newaxis]
 	
 	print(kde.get_params(deep=True))
 	pdf = kde.score_samples(X_plot)
@@ -55,15 +55,15 @@ def bias_check(sources):
 	plt.plot(X_plot[:,0],np.exp(pdf) , color = 'r', label = "Exponential KDE")
 	# plt.plot(X_plot[:,0],np.exp(cos_pdf) , color = 'g', label = "Cosine KDE")
 	
-	plt.title("Polarization in Political Twitter ")
+	plt.title("Polarization in Twitter ")
 	plt.legend()
-	
-	plt.savefig("t.png")
+	plt.show()
+	# plt.savefig("t.png")
 
 
 
 def quality_check(sources):
-	fd = pd.read_csv("domains_search.csv")
+	fd = pd.read_csv("domains.csv")
 	topn = fd['domains']
 
 	rval = {}
@@ -127,8 +127,8 @@ def main():
 			sources[ext.domain] = (lines[3], lines[4].strip())
 			# print(ext.domain, lines[3], lines[4])
 		counter +=1
-	# bias_check(sources)
-	quality_check(sources)
+	bias_check(sources)
+	# quality_check(sources)
 
 
 main()
