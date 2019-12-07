@@ -107,10 +107,10 @@ def quality_check(sources):
 	D,p_val = stats.ks_2samp(rvs, data_points)
 
 	plt.bar([x[0] for x in vals], [x[1]/total for x in vals], width=1)
-	plt.plot(X_plot, pdf , color = 'r', label = "Skew Norm (P-value: "+str(p_val)+" )")
+	# plt.plot(X_plot, pdf , color = 'r', label = "Skew Norm (P-value: "+str(p_val)+" )")
 	# # plt.plot(X_plot[:,0],np.exp(cos_pdf) , color = 'g', label = "Cosine KDE")
 	
-	plt.title("Source Quality of Political Twitter ")
+	plt.title("Source Quality of Twitter ")
 	plt.legend()
 	plt.show()
 	# plt.savefig("t.png")
@@ -127,8 +127,8 @@ def main():
 			sources[ext.domain] = (lines[3], lines[4].strip())
 			# print(ext.domain, lines[3], lines[4])
 		counter +=1
-	bias_check(sources)
-	# quality_check(sources)
+	# bias_check(sources)
+	quality_check(sources)
 
 
 main()
