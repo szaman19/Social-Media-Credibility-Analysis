@@ -7,13 +7,14 @@ def main():
 	collection = twitter_db['url_tweets_search']
 	# print(collection.count())
 	f = open("domains_search.csv", 'w')
-	f.write("domains,suffix,subdomain,reg_domain,time\n")
+	f.write("domains,suffix,subdomain,reg_domain,time,rtc,fc\n")
 	counter = 0
 	tweets = collection.find()
 	total  = tweets.count()
 	for doc in tweets:
 		counter +=1
 		print("Analyzing: ", counter , " / ", total)
+		#print(doc.keys())
 		if 'delete' not in doc.keys():
 			if 'entities' in doc.keys():
 				ent = doc['entities']
@@ -30,7 +31,11 @@ def main():
 						f.write(",")
 						f.write(ext.registered_domain)
 						f.write(",")
-						f.write(doc['timestamp_ms'])
+						f.write(doc['created_at'])
+						f.write(",")
+						f.write(str(doc['retweet_count']))
+						f.write(",")
+						f.write(str(doc['favorite_count']))
 						f.write('\n')
 	f.close()
 			 
